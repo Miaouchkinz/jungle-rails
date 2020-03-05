@@ -13,7 +13,12 @@ Rails.application.routes.draw do
   resources :orders, only: [:create, :show]
 
   get '/about', to: 'about#show'
-  
+
+  # these routes are for showing users a login form, logging them in, and logging them out.
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  get '/logout' => 'sessions#destroy'
+
   get '/signup', to: 'users#new'
   post '/users', to: 'users#create'
 
