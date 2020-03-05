@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   resources :orders, only: [:create, :show]
 
   get '/about', to: 'about#show'
+  
+  get '/signup', to: 'users#new'
+  post '/users', to: 'users#create'
 
   namespace :admin do
     root to: 'dashboard#show'
