@@ -2,24 +2,23 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'Validations' do
-    # must be created with a password and password confirmation fields
     it "is valid when password and password confirmation match" do
       user = User.new name: 'Tiny Tim', email: 'tinytim@xmas.ca', password: 'pass123', password_confirmation: 'pass123'
       expect(user).to be_valid
     end
-    # password and password conf need to match
+
     it "is not valid when password and password confirmation do not match" do
       user = User.new name: 'Tiny Tim', email: 'tinytim@xmas.ca', password: 'pass123', password_confirmation: 'pass321'
       expect(user).to_not be_valid
     end
-    # emails must be unique and not case sensitive
+
     it "is valid when emails is unique (not case sensitive)" do
       user1 = User.new name: 'Tiny Tim', email: 'tinytim@xmas.ca', password: 'pass123', password_confirmation: 'pass123'
       user2 = User.new name: 'Mother Mary', email: 'TiNyTiM@XMAS.ca', password: 'pass123', password_confirmation: 'pass123'
       user1.save
       expect(user2).to_not be_valid
     end
-    # email, first name, and last name are also required
+
     it "is not valid when email is blank" do
       user = User.new name: 'Tiny Tim', email: '', password: 'pass123', password_confirmation: 'pass321'
       expect(user).to_not be_valid
@@ -30,7 +29,6 @@ RSpec.describe User, type: :model do
       expect(user).to_not be_valid
     end
 
-    # the password must have a minimum length when a use account is being created
     it "is not valid when password is under 3 characters" do
       user = User.new name: 'Tiny Tim', email: 'tinytim@xmas.ca', password: '12', password_confirmation: '12'
       expect(user).to_not be_valid
@@ -42,7 +40,6 @@ RSpec.describe User, type: :model do
       User.create(name: 'Tiny Tim', email: 'tinytim@xmas.ca', password: 'pass123', password_confirmation: 'pass123')
     }
 
-    # examples for this class method here
     it "validates a user with given credentials" do
       authenticated_user = User.authenticate_with_credentials(subject.email, subject.password)
       expect(authenticated_user).to eq(subject)
